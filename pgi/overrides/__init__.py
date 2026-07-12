@@ -10,7 +10,7 @@ import sys
 import importlib
 import warnings
 from functools import wraps
-from pkgutil import get_loader
+from importlib.util import find_spec
 
 from pgi import const
 from pgi.util import PyGIDeprecationWarning
@@ -108,9 +108,11 @@ def load_overrides(introspection_module):
 
         # http://bugs.python.org/issue14710
         try:
-            override_loader = get_loader(override_package_name)
+            override_spec = find_spec(override_package_name)
+            override_loader = \
+                override_spec.loader if override_spec is not None else None
 
-        except AttributeError:
+        except (AttributeError, ImportError, ValueError):
             override_loader = None
 
         # Avoid checking for an ImportError, an override might

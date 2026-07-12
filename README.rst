@@ -1,3 +1,11 @@
+Fork
+====
+
+This is a fork of `pgi <https://github.com/lazka/pgi>`_. The only change is in
+``pgi/overrides/__init__.py``: the removed ``pkgutil.get_loader`` call is
+replaced with ``importlib.util.find_spec`` so that pgi works on Python 3.14+
+(which dropped ``pkgutil.get_loader``). Nothing else is changed.
+
 PGI - Pure Python GObject Introspection Bindings
 ================================================
 
